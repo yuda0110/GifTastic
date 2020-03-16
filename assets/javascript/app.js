@@ -83,5 +83,6 @@ $(document).ready(function () {
   gifTastic.renderButtons();
 
   $(document).on('click', '.btn-char', gifTastic.displayGifs);
+  $(document).on('click', '.gif-image', gifTastic.changeImage);
 
 });

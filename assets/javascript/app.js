@@ -41,13 +41,16 @@ $(document).ready(function () {
       const char = $(this).attr('data-name');
       const apiKey = '1sjuds6ZKI5gKnDVhsyFsT55ptYVnuUG';
       const limit = '10';
-      const queryURL = `http://api.giphy.com/v1/gifs/search?api_key=${apiKey}&q=${char}&limit=${limit}`;
+      const queryURL = `https://api.giphy.com/v1/gifs/search?api_key=${apiKey}&q=${char}&limit=${limit}`;
 
       $.ajax({
         url: queryURL,
         method: 'GET'
       }).then(function (response) {
         console.log(response);
+
+        const gifsViewEl = $('#gifs-view');
+        gifsViewEl.empty();
 
         response.data.forEach(function (item, index) {
           const gifContainerEl = $('<div>');
@@ -61,7 +64,7 @@ $(document).ready(function () {
           imageEl.attr(gifTastic.imageAttr.dataState, gifTastic.imageState.still);
 
           gifContainerEl.append(ratingEl, imageEl);
-          $('#gifs-view').append(gifContainerEl);
+          gifsViewEl.append(gifContainerEl);
         });
       });
     },
@@ -83,6 +86,16 @@ $(document).ready(function () {
   gifTastic.renderButtons();
 
   $(document).on('click', '.btn-char', gifTastic.displayGifs);
+
   $(document).on('click', '.gif-image', gifTastic.changeImage);
+
+  $('#add-character').on('click', function (e) {
+    e.preventDefault();
+    const charInputEl = $('#character-input');
+    const newChar = charInputEl.val().trim();
+    charInputEl.val('');
+    gifTastic.characters.push(newChar);
+    gifTastic.renderButtons();
+  });
 
 });

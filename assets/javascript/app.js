@@ -167,10 +167,17 @@ $(document).ready(function () {
   $('#add-character').on('click', function (e) {
     e.preventDefault();
     const charInputEl = $('#character-input');
-    const newChar = charInputEl.val().trim();
-    charInputEl.val('');
-    gifTastic.characters.push(newChar);
-    gifTastic.renderButtons();
+    const newChar = charInputEl.val().toLowerCase().trim();
+    const charLowercaseArray = gifTastic.characters.map(function (char) {
+      return char.toLowerCase();
+    });
+    if (charLowercaseArray.includes(newChar)) {
+      gifTastic.renderMessage('The character you typed in already exists. Please add a different character.')
+    } else {
+      charInputEl.val('');
+      gifTastic.characters.push(newChar);
+      gifTastic.renderButtons();
+    }
   });
 
 });

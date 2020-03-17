@@ -117,7 +117,8 @@ $(document).ready(function () {
 
         response.data.forEach(function (item, index) {
           const gifContainerEl = $('<div>');
-          const ratingEl = $('<p>').text(`${index + 1}. Rating: ${item.rating}`);
+          const titleEl = $('<p>').text(`${index + 1 + gifTastic.gifsViewState.offset}. "${item.title}"`);
+          const ratingEl = $('<p>').text(`Rating: ${item.rating}`);
           const stillImage = item.images.fixed_height_still.url;
           const imageEl = $('<img>').addClass('gif-image');
           imageEl.attr('src', stillImage);
@@ -126,7 +127,7 @@ $(document).ready(function () {
           imageEl.attr(gifTastic.imageAttr.dataAnimate, item.images.fixed_height.url);
           imageEl.attr(gifTastic.imageAttr.dataState, gifTastic.imageState.still);
 
-          gifContainerEl.append(ratingEl, imageEl);
+          gifContainerEl.append(titleEl, ratingEl, imageEl);
           gifsViewEl.append(gifContainerEl);
         });
       });

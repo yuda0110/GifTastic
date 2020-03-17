@@ -14,11 +14,17 @@ $(document).ready(function () {
     ],
     // Ex) Anna, Tiana, Sheriff Woody, Buzz Lightyear, Jasmine, Daisy Duck, Pluto
 
+    apiKey: '1sjuds6ZKI5gKnDVhsyFsT55ptYVnuUG',
+
+    limit: 10,
+
+    offset: 0,
+
     selectedCharacter: null,
 
     showMoreCount: 0,
 
-    limitNumGifs: 30,
+    maxNumGifs: 30,
 
     maxGifsReached: false,
 
@@ -45,7 +51,7 @@ $(document).ready(function () {
       });
     },
 
-    displayGifs: function (el, showMore) {
+    moreGifs: function (el, showMore) {
       if (showMore && this.maxGifsReached) {
         console.log('showMore && this.maxGifsReached');
         return;
@@ -115,6 +121,44 @@ $(document).ready(function () {
       });
     },
 
+    firstGifs: function () {
+      gifTastic.selectedCharacter = $(this).attr('data-name');
+      gifTastic.displayGifs(false);
+    },
+
+    displayGifs: function (showMore) {
+      const char = this.selectedCharacter;
+      const queryURL = `https://api.giphy.com/v1/gifs/search?api_key=${this.apiKey}&q=${char}&limit=${this.limit}&offset=${this.offset}`;
+
+      $.ajax({
+        url: queryURL,
+        method: 'GET'
+      }).then(function (response) {
+        console.log(response);
+
+        const gifsViewEl = $('#gifs-view');
+
+        if (!showMore) {
+          gifsViewEl.empty();
+        }
+
+        response.data.forEach(function (item, index) {
+          const gifContainerEl = $('<div>');
+          const ratingEl = $('<p>').text(`${index + 1}. Rating: ${item.rating}`);
+          const stillImage = item.images.fixed_height_still.url;
+          const imageEl = $('<img>').addClass('gif-image');
+          imageEl.attr('src', stillImage);
+          imageEl.attr('alt', `${char} Gif Animation ${index}`);
+          imageEl.attr(gifTastic.imageAttr.dataStill, stillImage);
+          imageEl.attr(gifTastic.imageAttr.dataAnimate, item.images.fixed_height.url);
+          imageEl.attr(gifTastic.imageAttr.dataState, gifTastic.imageState.still);
+
+          gifContainerEl.append(ratingEl, imageEl);
+          gifsViewEl.append(gifContainerEl);
+        });
+      });
+    },
+
     changeImage: function () {
       const state = $(this).attr(gifTastic.imageAttr.dataState);
 
@@ -131,9 +175,7 @@ $(document).ready(function () {
 
   gifTastic.renderButtons();
 
-  $(document).on('click', '.btn-char', function () {
-    gifTastic.displayGifs($(this), false)
-  });
+  $(document).on('click', '.btn-char', gifTastic.firstGifs);
 
   $('#show-more').on('click', function () {
     if (gifTastic.selectedCharacter) {

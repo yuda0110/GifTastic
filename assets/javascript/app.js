@@ -51,83 +51,44 @@ $(document).ready(function () {
       });
     },
 
-    moreGifs: function (el, showMore) {
-      if (showMore && this.maxGifsReached) {
-        console.log('showMore && this.maxGifsReached');
-        return;
-      }
-
-      console.log(showMore);
-      console.log(el);
-
-      const addedGifNumPerClick = 10;
-      let char = '';
-      if (gifTastic.selectedCharacter) {
-        char = gifTastic.selectedCharacter;
-        console.log('char1: ' + char);
-      } else {
-        char = el.attr('data-name');
-        gifTastic.selectedCharacter = char;
-        console.log('char2: ' + char);
-      }
-
-      console.log('char3: ' + char);
-
-      const apiKey = '1sjuds6ZKI5gKnDVhsyFsT55ptYVnuUG';
-      const limit = '10';
-
-      let offset = 0;
-      if (showMore) {
-        const count = this.showMoreCount++;
-        console.log('this.showMoreCount: ' + this.showMoreCount);
-        if (count < 3) {
-          offset = gifTastic.showMoreCount * addedGifNumPerClick;
-        } else {
-          $('#message').text('You have reached max number of images to show.');
-          this.maxGifsReached = true;
-        }
-      } else {
-        gifTastic.showMoreCount = 0;
-      }
-
-      const queryURL = `https://api.giphy.com/v1/gifs/search?api_key=${apiKey}&q=${char}&limit=${limit}&offset=${offset}`;
-
-      $.ajax({
-        url: queryURL,
-        method: 'GET'
-      }).then(function (response) {
-        console.log(response);
-
-        const gifsViewEl = $('#gifs-view');
-
-        if (!showMore) {
-          gifsViewEl.empty();
-        }
-
-        response.data.forEach(function (item, index) {
-          const gifContainerEl = $('<div>');
-          const ratingEl = $('<p>').text(`${index + 1}. Rating: ${item.rating}`);
-          const stillImage = item.images.fixed_height_still.url;
-          const imageEl = $('<img>').addClass('gif-image');
-          imageEl.attr('src', stillImage);
-          imageEl.attr('alt', `${char} Gif Animation ${index}`);
-          imageEl.attr(gifTastic.imageAttr.dataStill, stillImage);
-          imageEl.attr(gifTastic.imageAttr.dataAnimate, item.images.fixed_height.url);
-          imageEl.attr(gifTastic.imageAttr.dataState, gifTastic.imageState.still);
-
-          gifContainerEl.append(ratingEl, imageEl);
-          gifsViewEl.append(gifContainerEl);
-        });
-      });
-    },
-
     firstGifs: function () {
       gifTastic.selectedCharacter = $(this).attr('data-name');
       gifTastic.displayGifs(false);
     },
 
+    moreGifs: function () {
+      if (!gifTastic.selectedCharacter) {
+        $('#message').text('Please select a character first!');
+        return;
+      }
+
+      if (gifTastic.maxGifsReached) {
+        return;
+      }
+
+      const addedGifNumPerClick = 10;
+      gifTastic.showMoreCount += 1;
+
+      if (gifTastic.showMoreCount < gifTastic.maxNumGifs / addedGifNumPerClick) {
+        gifTastic.offset = gifTastic.showMoreCount * addedGifNumPerClick;
+      } else {
+        $('#message').text('You have reached max number of images to show.');
+        gifTastic.maxGifsReached = true;
+      }
+
+      if (!gifTastic.maxGifsReached) {
+        gifTastic.displayGifs(true);
+      }
+    },
+
     displayGifs: function (showMore) {
-      const char = this.selectedCharacter;
+      let char = '';
+      if (this.selectedCharacter) {
+        char = gifTastic.selectedCharacter;
+        console.log('char1: ' + char);
+      }
+      console.log('char2: ' + char);
+
       const queryURL = `https://api.giphy.com/v1/gifs/search?api_key=${this.apiKey}&q=${char}&limit=${this.limit}&offset=${this.offset}`;
 
       $.ajax({
@@ -177,13 +138,7 @@ $(document).ready(function () {
 
   $(document).on('click', '.btn-char', gifTastic.firstGifs);
 
-  $('#show-more').on('click', function () {
-    if (gifTastic.selectedCharacter) {
-      gifTastic.displayGifs($(this),true)
-    } else {
-      $('#message').text('Please select a character first!');
-    }
-  });
+  $('#show-more').on('click', gifTastic.moreGifs);
 
   $(document).on('click', '.gif-image', gifTastic.changeImage);
 

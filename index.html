@@ -10,21 +10,20 @@
     <link rel="stylesheet" type="text/css" href="./assets/css/style.css">
 </head>
 <body>
-<div class="container">
-    <h1>Gif Animation - Disney Characters</h1>
-
-    <p id="message" class="message"></p>
-
+<h1>Gif Animation - Disney Characters</h1>
+<header>
     <div id="buttons-view"></div>
+    <form id="character-form" class="character-form">
+        <label for="character-input" class="character-input__label">Add a character</label>
+        <input type="text" id="character-input" class="character-input" placeholder="Disney Character Name">
+        <button id="add-character" class="btn-pink" type="submit">Add a Character!</button>
+    </form>
+</header>
+<div class="container">
+    <p id="message" class="message"></p>
 
     <button id="show-more">Show 10 More Gif Images</button>
     <p class="attention">You can show up to 100 images.</p>
-
-    <form id="character-form">
-        <label for="character-input">Add a character</label>
-        <input type="text" id="character-input">
-        <button id="add-character" type="submit">Add a Character!</button>
-    </form>
 
     <div id="gifs-view"></div>
 </div>

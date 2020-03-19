@@ -166,15 +166,18 @@ $(document).ready(function () {
 
   $('#add-character').on('click', function (e) {
     e.preventDefault();
+    gifTastic.renderMessage('');
     const charInputEl = $('#character-input');
     const newChar = charInputEl.val().toLowerCase().trim();
     const charLowercaseArray = gifTastic.characters.map(function (char) {
       return char.toLowerCase();
     });
     if (charLowercaseArray.includes(newChar)) {
-      gifTastic.renderMessage('The character you typed in already exists. Please add a different character.')
+      gifTastic.renderMessage('The character you typed in already exists. Please add a different character.');
+    } else if (newChar.length < 1) {
+      gifTastic.renderMessage('Please type in a character\'s name.');
     } else {
-      charInputEl.val('');
+      charInputEl.val('')
       gifTastic.characters.push(newChar);
       gifTastic.renderButtons();
     }

@@ -118,18 +118,26 @@ $(document).ready(function () {
         }
 
         response.data.forEach(function (item, index) {
-          const gifItemEl = $('<div class="gif-item">');
-          const titleEl = $('<p class="title">').text(`${index + 1 + gifTastic.gifsViewState.offset}. "${item.title}"`);
+          const dataNum = index + 1 + gifTastic.gifsViewState.offset;
+          const dataName = `${char}-${dataNum}`;
+          const gifItemEl = $('<div class="gif-item">').attr('data-name', dataName);
+          const titleEl = $('<p class="title">').text(`${dataNum} "${item.title}"`);
           const ratingEl = $('<div class="rating">').text(item.rating);
           const stillImage = item.images.fixed_height_still.url;
           const imageContainerEl = $('<div class="image-container">');
           const imageEl = $('<img class="gif-image">');
+          const favoriteEl = $('<button class="favorite-btn">');
+          const favoriteIcon = $('<ion-icon name="heart">');
+          const favoriteTxtEl = $('<span>');
+          favoriteTxtEl.text('Add to Favorite')
+          favoriteEl.attr('data-name', dataName);
+          favoriteEl.append(favoriteTxtEl, favoriteIcon);
           imageEl.attr('src', stillImage);
           imageEl.attr('alt', `${char} Gif Animation ${index}`);
           imageEl.attr(gifTastic.imageAttr.dataStill, stillImage);
           imageEl.attr(gifTastic.imageAttr.dataAnimate, item.images.fixed_height.url);
           imageEl.attr(gifTastic.imageAttr.dataState, gifTastic.imageState.still);
-          imageContainerEl.append(imageEl, ratingEl);
+          imageContainerEl.append(imageEl, ratingEl, favoriteEl);
 
           gifItemEl.append(titleEl, imageContainerEl);
           gifsViewEl.append(gifItemEl);

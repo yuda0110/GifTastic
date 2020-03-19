@@ -6,6 +6,7 @@
     --color-blue-dark2: #049;
     --color-pink: #f1408b;
     --color-pink-light: #fff5f9;
+    --color-pink-dark: #b31b57;
     --color-red: #e60011;
     --color-red-dark: #680404;
     --color-green: #4a8a33;
@@ -104,7 +105,7 @@ h2 {
     color: var(--color-white);
     background: var(--color-blue);
     text-transform: capitalize;
-    border-radius: .5rem;
+    border-radius: 5rem;
     border: none;
     font-weight: 500;
     font-size: 1.2rem;
@@ -170,7 +171,7 @@ header {
     /*border: 1px solid var(--color-grey-light);*/
 }
 
-.message {
+.message-container {
     width: 100%;
     margin-bottom: 1rem;
     padding: .5rem 1rem;
@@ -178,27 +179,38 @@ header {
     color: var(--color-pink);
     background: var(--color-pink-light);
     font-size: 1.4rem;
+    display: flex;
+    align-items: center;
+}
+
+.message-container .message {
+    display: inline-block;
+}
+
+.message-container ion-icon {
+    margin-right: .5rem;
+    color: var(--color-pink);
+    font-size: 2.2rem;
 }
 
 .gifs-container {
     position: relative;
 }
 
-#show-more {
-    line-height: 1;
-    /*vertical-align: bottom;*/
+.gif-image {
+    cursor: pointer;
 }
 
-#show-more::before {
-    content: '+';
-    width: 1.2rem;
-    height: 1.2rem;
+#show-more {
+    line-height: 1;
+    display: flex;
+    align-items: center;
+}
+
+#show-more ion-icon {
     margin-right: .5rem;
-    color: var(--color-blue-dark1);
-    display: inline-block;
-    background: var(--color-white);
-    border-radius: 50%;
-    font-weight: bold;
+    color: var(--color-white);
+    font-size: 1.8rem;
 }
 
 #gifs-view {
@@ -236,13 +248,40 @@ header {
     text-transform: uppercase;
     position: absolute;
     top: .5rem;
-    right: .5rem;
+    left: .5rem;
     z-index: 5;
     background: var(--color-blue-dark2);
     color: var(--color-white);
     line-height: 1;
     border-radius: 2px;
-    box-shadow: 0 0 .3rem 0 var(--color-white);
+    box-shadow: 0 0 2px 0 var(--color-white);
+}
+
+.gif-item .favorite-btn {
+    /*width: 2rem;*/
+    /*height: 2rem;*/
+    padding: .2rem .5rem;
+    color: var(--color-white);
+    background: var(--color-pink);
+    position: absolute;
+    bottom: 1.2rem;
+    right: .5rem;
+    z-index: 5;
+    border: 1px solid var(--color-pink-dark);
+    border-radius: 3rem;
+    font-size: 1.1rem;
+    display: flex;
+    align-items: center;
+}
+
+.gif-item .favorite-btn span {
+    font-weight: normal;
+}
+
+.gif-item .favorite-btn ion-icon {
+    width: 1.2rem;
+    height: 1.2rem;
+    margin-left: .3rem;
 }
 
 

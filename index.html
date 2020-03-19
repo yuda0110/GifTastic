@@ -20,17 +20,27 @@
     </form>
 </header>
 <div class="container">
-    <p id="message" class="message"></p>
+    <div class="message-container">
+        <ion-icon name="information-circle"></ion-icon>
+        <p id="message" class="message"></p>
+    </div>
 
     <div class="gifs-container">
-        <button id="show-more" class="btn-blue">Show 10 More Gif Images (Max: 100 images)</button>
-        <!--    <p class="attention">You can show up to 100 images.</p>-->
+        <div id="search-result">
+            <button id="show-more" class="btn-blue">
+                <ion-icon name="add-circle"></ion-icon>
+                <span>Show 10 More Gif Images (Max: 100 images)</span>
+            </button>
+            <div id="gifs-view"></div>
+        </div>
+        <div id="favorite-gifs">
 
-        <div id="gifs-view"></div>
+        </div>
     </div>
 </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://unpkg.com/ionicons@5.0.0/dist/ionicons.js"></script>
 <script src="./assets/javascript/app.js"></script>
 </body>
 </html>

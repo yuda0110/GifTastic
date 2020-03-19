@@ -24,6 +24,8 @@ $(document).ready(function () {
 
     gifsViewState: null,
 
+    defaultMessage: 'Please click any button to show gif images of a Disney character.',
+
     resetGifsViewState: function () {
       this.gifsViewState = this.gifsViewStateFactory();
     },
@@ -33,7 +35,7 @@ $(document).ready(function () {
         offset: 0,
         showMoreCount: 0,
         maxGifsReached: false,
-        message: ''
+        message: this.defaultMessage
       }
     },
 
@@ -76,7 +78,7 @@ $(document).ready(function () {
         gifTastic.renderMessage('Please select a character first!');
         return;
       } else {
-        gifTastic.renderMessage('');
+        gifTastic.renderMessage();
       }
 
       const addedGifNumPerClick = 10;
@@ -134,7 +136,13 @@ $(document).ready(function () {
     },
 
     renderMessage: function (message) {
-      $('#message').text(message);
+      const messageEl = $('#message');
+      if (message) {
+        messageEl.text(message);
+      } else {
+        messageEl.text(gifTastic.defaultMessage);
+      }
+
       if (this.gifsViewState) {
         this.gifsViewState.message = message;
       }
@@ -150,13 +158,16 @@ $(document).ready(function () {
         $(this).attr('src', $(this).attr(gifTastic.imageAttr.dataStill));
         $(this).attr(gifTastic.imageAttr.dataState, gifTastic.imageState.still);
       }
-    }
+    },
 
+    initialize: function () {
+      this.resetGifsViewState();
+      this.renderButtons();
+      this.renderMessage();
+    }
   };
 
-  gifTastic.renderButtons();
-
-  gifTastic.resetGifsViewState();
+  gifTastic.initialize();
 
   $(document).on('click', '.btn-char', gifTastic.firstGifs);
 

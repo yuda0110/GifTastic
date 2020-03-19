@@ -5,13 +5,14 @@
     --color-blue-dark1: #07c;
     --color-blue-dark2: #049;
     --color-pink: #f1408b;
+    --color-pink-light: #fff5f9;
     --color-red: #e60011;
     --color-red-dark: #680404;
     --color-green: #4a8a33;
     --color-green-light1: #b1c795;
     --color-white: #fff;
     --color-black: #090909;
-    --color-grey1: #333;
+    --color-grey: #333;
     --color-grey-light: #d9d9d9;
 
     --font-heading: 'Montserrat', sans-serif;
@@ -85,6 +86,7 @@ h2 {
     box-shadow: 1px 2px 0px 1px var(--color-grey-light);
     -moz-box-shadow: 1px 2px 0px 1px var(--color-grey-light);
     -webkit-box-shadow: 1px 2px 0px 1px var(--color-grey-light);
+    cursor: pointer;
 }
 
 .btn-pink {
@@ -145,14 +147,23 @@ header {
 
 /* ========== MAIN CONTENTS ========== */
 .container {
-    width: calc(100% - 4rem);
-    max-width: 960px;
+    width: 100%;
+    max-width: 1200px;
     min-height: calc(100vh - 8rem);
-    height: calc(100vh - 8rem);
-    margin: 4rem auto;
+    height: auto;
+    margin: 0 auto;
     padding: 2rem;
     background: var(--color-white);
-    border: 1px solid var(--color-grey-light);
+    /*border: 1px solid var(--color-grey-light);*/
+}
+
+.message {
+    width: 100%;
+    padding: .5rem 1rem;
+    border: 1px solid var(--color-pink);
+    color: var(--color-pink);
+    background: var(--color-pink-light);
+    font-size: 1.2rem;
 }
 
 
@@ -160,10 +171,6 @@ header {
     /* width: 641px to 768px */
     html {
         font-size: 62.5%; /* 10px/16px = 62.5% -> 1rem = 10px */
-    }
-
-    .container {
-        padding: 4rem;
     }
 }
 

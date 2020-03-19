@@ -16,6 +16,9 @@
 
     --font-heading: 'Montserrat', sans-serif;
     --font-default: 'Work Sans', sans-serif;
+
+    --width-character-form: 30rem;
+    --width-character-form-btn: 13rem;
 }
 
 /* ========== COMMON ========== */
@@ -85,12 +88,10 @@ h2 {
 }
 
 .btn-pink {
-    padding: .5rem 1rem;
-    font-size: 1.6rem;
     color: var(--color-white);
     background: var(--color-pink);
     text-transform: capitalize;
-    border-radius: 0 .5rem .5rem 0;
+    border-radius: .5rem;
     border: none;
     font-weight: 500;
 }
@@ -98,28 +99,48 @@ h2 {
 
 /* ========== HEADER ========== */
 header {
-    padding: 1rem 3rem 0 3rem;
+    padding: 2rem 3rem 1rem 3rem;
     display: flex;
-    justify-content: space-between;
+    flex-direction: column;
     align-items: center;
     background: var(--color-blue-light);
     border-bottom: 1px solid var(--color-blue-dark1);
 }
 
-.buttons-view {
+#buttons-view {
     margin-right: 2rem;
 }
 
 .character-form {
-    width: 44rem;
-}
-
-.character-input {
-    padding: .5rem 1rem;
+    width: 100%;
+    height: 3rem;
+    margin: .5rem 0 1rem;
+    display: flex;
 }
 
 .character-input__label {
     display: none;
+}
+
+.character-input {
+    width: calc(100% - var(--width-character-form-btn));
+    height: 100%;
+    padding: .5rem 1rem;
+    vertical-align: middle;
+    border: 1px solid var(--color-grey-light);
+    border-right: none;
+    outline: none;
+}
+
+#add-character {
+    width: var(--width-character-form-btn);
+    height: 100%;
+    padding: .5rem 1rem;
+    font-size: 1.2rem;
+    border-radius: 0 .5rem .5rem 0;
+    vertical-align: middle;
+    cursor: pointer;
+    outline: none;
 }
 
 /* ========== MAIN CONTENTS ========== */
@@ -143,6 +164,47 @@ header {
 
     .container {
         padding: 4rem;
+    }
+}
+
+@media screen and (min-width: 769px) {
+    /* width: 769px to  */
+    header {
+        padding: 1rem 3rem 0 3rem;
+        justify-content: space-between;
+        align-items: center;
+        flex-direction: row;
+    }
+
+    .character-form {
+        width: var(--width-character-form);
+        height: 3rem;
+        margin-top: 0;
+        display: flex;
+    }
+
+    .character-input__label {
+        display: none;
+    }
+
+    .character-input {
+        width: calc(var(--width-character-form) - var(--width-character-form-btn));
+        height: 100%;
+        padding: .5rem 1rem;
+        vertical-align: middle;
+        outline: none;
+    }
+
+    #add-character {
+        width: var(--width-character-form-btn);
+        height: 100%;
+        margin-left: -.8rem;
+        padding: .5rem 1rem;
+        font-size: 1.2rem;
+        border-radius: 0 .5rem .5rem 0;
+        vertical-align: middle;
+        cursor: pointer;
+        outline: none;
     }
 }
 

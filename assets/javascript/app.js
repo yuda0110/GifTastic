@@ -119,17 +119,19 @@ $(document).ready(function () {
 
         response.data.forEach(function (item, index) {
           const gifItemEl = $('<div class="gif-item">');
-          const titleEl = $('<p>').text(`${index + 1 + gifTastic.gifsViewState.offset}. "${item.title}"`);
-          const ratingEl = $('<p>').text(`Rating: ${item.rating}`);
+          const titleEl = $('<p class="title">').text(`${index + 1 + gifTastic.gifsViewState.offset}. "${item.title}"`);
+          const ratingEl = $('<div class="rating">').text(item.rating);
           const stillImage = item.images.fixed_height_still.url;
-          const imageEl = $('<img>').addClass('gif-image');
+          const imageContainerEl = $('<div class="image-container">');
+          const imageEl = $('<img class="gif-image">');
           imageEl.attr('src', stillImage);
           imageEl.attr('alt', `${char} Gif Animation ${index}`);
           imageEl.attr(gifTastic.imageAttr.dataStill, stillImage);
           imageEl.attr(gifTastic.imageAttr.dataAnimate, item.images.fixed_height.url);
           imageEl.attr(gifTastic.imageAttr.dataState, gifTastic.imageState.still);
+          imageContainerEl.append(imageEl, ratingEl);
 
-          gifItemEl.append(titleEl, ratingEl, imageEl);
+          gifItemEl.append(titleEl, imageContainerEl);
           gifsViewEl.append(gifItemEl);
         });
       });

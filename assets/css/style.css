@@ -16,7 +16,7 @@
     --color-grey-light: #d9d9d9;
 
     --font-heading: 'Montserrat', sans-serif;
-    --font-default: 'Work Sans', sans-serif;
+    --font-default: 'Roboto', sans-serif;
 
     --width-character-form: 30rem;
     --width-character-form-btn: 13rem;
@@ -175,7 +175,7 @@ header {
     border: 1px solid var(--color-pink);
     color: var(--color-pink);
     background: var(--color-pink-light);
-    font-size: 1.2rem;
+    font-size: 1.4rem;
 }
 
 .gifs-container {
@@ -188,6 +188,7 @@ header {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
+    color: var(--color-grey);
 }
 
 .gif-item {
@@ -198,6 +199,33 @@ header {
 .gif-item img {
     width: 100%;
 }
+
+.gif-item .title {
+    margin-bottom: .5rem;
+    font-size: 1.4rem;
+    line-height: 1.2;
+    font-weight: 500;
+}
+
+.image-container {
+    position: relative;
+}
+
+.gif-item .rating {
+    padding: .3rem .5rem;
+    font-size: 1.2rem;
+    text-transform: uppercase;
+    position: absolute;
+    top: .5rem;
+    right: .5rem;
+    z-index: 5;
+    background: var(--color-blue-dark2);
+    color: var(--color-white);
+    line-height: 1;
+    border-radius: 2px;
+    box-shadow: 0 0 .3rem 0 var(--color-white);
+}
+
 
 @media screen and (min-width: 641px) {
     /* width: 641px to 768px */

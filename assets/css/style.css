@@ -98,6 +98,17 @@ h2 {
     font-weight: 500;
 }
 
+.btn-blue {
+    padding: .5rem 1rem;
+    color: var(--color-white);
+    background: var(--color-blue);
+    text-transform: capitalize;
+    border-radius: .5rem;
+    border: none;
+    font-weight: 500;
+    font-size: 1.2rem;
+}
+
 
 /* ========== HEADER ========== */
 header {
@@ -159,6 +170,7 @@ header {
 
 .message {
     width: 100%;
+    margin-bottom: 1rem;
     padding: .5rem 1rem;
     border: 1px solid var(--color-pink);
     color: var(--color-pink);
@@ -166,11 +178,35 @@ header {
     font-size: 1.2rem;
 }
 
+.gifs-container {
+    position: relative;
+}
+
+#gifs-view {
+    width: 100%;
+    margin-top: 1rem;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.gif-item {
+    width: 48%;
+    margin-bottom: 1rem;
+}
+
+.gif-item img {
+    width: 100%;
+}
 
 @media screen and (min-width: 641px) {
     /* width: 641px to 768px */
     html {
         font-size: 62.5%; /* 10px/16px = 62.5% -> 1rem = 10px */
+    }
+
+    .gif-item {
+        width: 31%;
     }
 }
 
@@ -212,6 +248,11 @@ header {
         vertical-align: middle;
         cursor: pointer;
         outline: none;
+    }
+
+    .gif-item {
+        width: 22%;
+        margin-bottom: 2rem;
     }
 }
 

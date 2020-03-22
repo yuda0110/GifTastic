@@ -28,6 +28,10 @@ $(document).ready(function () {
     defaultMessage: 'Please click any button to show gif images of a Disney character.',
 
     favGifsList: null,
+    
+    addFavText: 'Add to Favorite',
+
+    favedText: 'My Favorite',
 
     resetGifsViewState: function () {
       this.gifsViewState = this.gifsViewStateFactory();
@@ -125,7 +129,7 @@ $(document).ready(function () {
           const dataName = `${char.replace(' ', '-')}_${dataNum}`;
           const gifItemEl = $('<div class="gif-item">').attr('id', dataName);
           const title = item.title.length > 1 ? item.title : 'No Title';
-          const titleEl = $('<p class="title">').text(`${dataNum} ${title}`);
+          const titleEl = $('<p class="title">').text(title);
           const ratingEl = $('<div class="rating">').text(item.rating);
           const stillImage = item.images.fixed_height_still.url;
           const animateImage = item.images.fixed_height.url;
@@ -140,13 +144,13 @@ $(document).ready(function () {
           imageEl.attr(gifTastic.imageAttr.dataStill, stillImage);
           imageEl.attr(gifTastic.imageAttr.dataAnimate, animateImage);
           imageEl.attr(gifTastic.imageAttr.dataState, gifTastic.imageState.still);
-          favoriteTxtEl.text('Add to Favorite');
+          favoriteTxtEl.text(gifTastic.addFavText);
 
           if (gifTastic.favGifsList.length > 0) {
             gifTastic.favGifsList.forEach(function(obj) {
               if (animateImage === obj.animateImage) {
                 console.log(`it already fav!!!!`);
-                favoriteTxtEl.text('My Favorite')
+                favoriteTxtEl.text(gifTastic.favedText)
               }
             });
           }
@@ -220,7 +224,7 @@ $(document).ready(function () {
           imageEl.attr(gifTastic.imageAttr.dataState, gifTastic.imageState.still);
           imageContainerEl.append(imageEl, ratingEl);
           gifItemEl.append(titleEl, imageContainerEl);
-          favGifsEl.append(gifItemEl);
+          favGifsEl.prepend(gifItemEl);
         });
 
         favGifsContainerEl.append(heading, favGifsEl);
@@ -299,6 +303,7 @@ $(document).ready(function () {
       gifTastic.favGifsList.push(favObj);
       localStorage.setItem(favKeyInLocalStorage, JSON.stringify(gifTastic.favGifsList));
       gifTastic.renderFavGifs(gifTastic.favGifsList);
+      $(this).text(gifTastic.favedText);
     }
 
     console.log(gifTastic.favGifsList);

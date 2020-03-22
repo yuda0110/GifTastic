@@ -124,7 +124,8 @@ $(document).ready(function () {
           const dataNum = index + 1 + gifTastic.gifsViewState.offset;
           const dataName = `${char.replace(' ', '-')}_${dataNum}`;
           const gifItemEl = $('<div class="gif-item">').attr('id', dataName);
-          const titleEl = $('<p class="title">').text(`${dataNum} ${item.title}`);
+          const title = item.title.length > 1 ? item.title : 'No Title';
+          const titleEl = $('<p class="title">').text(`${dataNum} ${title}`);
           const ratingEl = $('<div class="rating">').text(item.rating);
           const stillImage = item.images.fixed_height_still.url;
           const imageContainerEl = $('<div class="image-container">');

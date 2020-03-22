@@ -21,7 +21,7 @@ $(document).ready(function () {
 
     selectedCharacter: null,
 
-    maxNumGifs: 30,
+    maxNumGifs: 100,
 
     gifsViewState: null,
 
@@ -69,7 +69,7 @@ $(document).ready(function () {
       gifTastic.resetGifsViewState();
       gifTastic.renderMessage(gifTastic.gifsViewState.message);
       gifTastic.selectedCharacter = $(this).attr('data-name');
-      gifTastic.displayGifs(false);
+      gifTastic.renderGifs(false);
     },
 
     moreGifs: function () {
@@ -95,11 +95,11 @@ $(document).ready(function () {
       }
 
       if (!gifTastic.gifsViewState.maxGifsReached) {
-        gifTastic.displayGifs(true);
+        gifTastic.renderGifs(true);
       }
     },
 
-    displayGifs: function (showMore) {
+    renderGifs: function (showMore) {
       let char = '';
       if (this.selectedCharacter) {
         char = gifTastic.selectedCharacter;
@@ -186,8 +186,14 @@ $(document).ready(function () {
     },
 
     renderFavGifs: function (list) {
+      if ($('#favorite-gifs-container')){
+        $('#favorite-gifs-container').remove();
+      }
+      const favGifsContainerEl = $('<div id="favorite-gifs-container">');
       const favGifsEl = $('<div id="favorite-gifs">');
       if (list.length > 0) {
+        const heading = $('<h2>').text('Favorite Gifs');
+
         list.forEach(function(item) {
           const gifItemEl = $('<div class="gif-item">');
           const titleEl = $('<p class="title">').text(item.title);
@@ -204,7 +210,9 @@ $(document).ready(function () {
           gifItemEl.append(titleEl, imageContainerEl);
           favGifsEl.append(gifItemEl);
         });
-        $('#gifs-container').append(favGifsEl);
+
+        favGifsContainerEl.append(heading, favGifsEl);
+        $('#gifs-container').prepend(favGifsContainerEl);
       } else {
         console.log('There is no favorite gif!!');
       }
@@ -215,6 +223,7 @@ $(document).ready(function () {
       this.renderButtons();
       this.renderMessage();
       this.getFavGifsData();
+      this.renderFavGifs(this.favGifsList);
     }
   };
 

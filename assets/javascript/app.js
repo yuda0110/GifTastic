@@ -128,19 +128,31 @@ $(document).ready(function () {
           const titleEl = $('<p class="title">').text(`${dataNum} ${title}`);
           const ratingEl = $('<div class="rating">').text(item.rating);
           const stillImage = item.images.fixed_height_still.url;
+          const animateImage = item.images.fixed_height.url;
           const imageContainerEl = $('<div class="image-container">');
           const imageEl = $('<img class="gif-image">');
           const favoriteEl = $('<button class="favorite-btn">');
           const favoriteIcon = $('<ion-icon name="heart">');
           const favoriteTxtEl = $('<span>');
-          favoriteTxtEl.text('Add to Favorite')
-          favoriteEl.attr('data-name', dataName);
-          favoriteEl.append(favoriteTxtEl, favoriteIcon);
+
           imageEl.attr('src', stillImage);
           imageEl.attr('alt', `${char} Gif Animation ${index}`);
           imageEl.attr(gifTastic.imageAttr.dataStill, stillImage);
-          imageEl.attr(gifTastic.imageAttr.dataAnimate, item.images.fixed_height.url);
+          imageEl.attr(gifTastic.imageAttr.dataAnimate, animateImage);
           imageEl.attr(gifTastic.imageAttr.dataState, gifTastic.imageState.still);
+          favoriteTxtEl.text('Add to Favorite');
+
+          if (gifTastic.favGifsList.length > 0) {
+            gifTastic.favGifsList.forEach(function(obj) {
+              if (animateImage === obj.animateImage) {
+                console.log(`it already fav!!!!`);
+                favoriteTxtEl.text('My Favorite')
+              }
+            });
+          }
+
+          favoriteEl.attr('data-name', dataName);
+          favoriteEl.append(favoriteTxtEl, favoriteIcon);
           imageContainerEl.append(imageEl, ratingEl, favoriteEl);
 
           gifItemEl.append(titleEl, imageContainerEl);
@@ -217,6 +229,8 @@ $(document).ready(function () {
         console.log('There is no favorite gif!!');
       }
     },
+
+
 
     initialize: function () {
       this.resetGifsViewState();

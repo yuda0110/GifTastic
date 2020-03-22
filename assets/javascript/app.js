@@ -233,10 +233,24 @@ $(document).ready(function () {
     favObj.animateImage = $(`${gifItemID} .gif-image`).attr('data-animate');
     console.log(favObj);
 
-    gifTastic.favGifsList.push(favObj);
+    let isFavorite = false;
+
+    gifTastic.favGifsList.forEach(function(obj) {
+      if (favObj.animateImage === obj.animateImage) {
+        console.log(`it already exists!!!!`);
+        isFavorite = true;
+      }
+    });
+
+    console.log('isFav: ' + isFavorite);
+
+    if (!isFavorite) {
+      gifTastic.favGifsList.push(favObj);
+      localStorage.setItem(favKeyInLocalStorage, JSON.stringify(gifTastic.favGifsList));
+    }
+
     console.log(gifTastic.favGifsList);
 
-    localStorage.setItem(favKeyInLocalStorage, JSON.stringify(gifTastic.favGifsList));
   });
 
 

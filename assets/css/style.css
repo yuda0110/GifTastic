@@ -193,7 +193,7 @@ header {
     font-size: 2.2rem;
 }
 
-.gifs-container {
+#gifs-container {
     position: relative;
 }
 

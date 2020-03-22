@@ -184,6 +184,31 @@ $(document).ready(function () {
       }
     },
 
+    renderFavGifs: function (list) {
+      const favGifsEl = $('<div id="favorite-gifs">');
+      if (list.length > 0) {
+        list.forEach(function(item) {
+          const gifItemEl = $('<div class="gif-item">');
+          const titleEl = $('<p class="title">').text(item.title);
+          const ratingEl = $('<div class="rating">').text(item.rating);
+          const imageContainerEl = $('<div class="image-container">');
+          const imageEl = $('<img class="gif-image">');
+          const stillImage = item.stillImage;
+          imageEl.attr('src', stillImage);
+          imageEl.attr('alt', item.title);
+          imageEl.attr(gifTastic.imageAttr.dataStill, stillImage);
+          imageEl.attr(gifTastic.imageAttr.dataAnimate, item.animateImage);
+          imageEl.attr(gifTastic.imageAttr.dataState, gifTastic.imageState.still);
+          imageContainerEl.append(imageEl, ratingEl);
+          gifItemEl.append(titleEl, imageContainerEl);
+          favGifsEl.append(gifItemEl);
+        });
+        $('#gifs-container').append(favGifsEl);
+      } else {
+        console.log('There is no favorite gif!!');
+      }
+    },
+
     initialize: function () {
       this.resetGifsViewState();
       this.renderButtons();
@@ -222,6 +247,8 @@ $(document).ready(function () {
     }
   });
 
+
+
   $(document).on('click', '.favorite-btn', function () {
     const favObj = {};
     const gifItemID = '#' + $(this).attr('data-name');
@@ -247,6 +274,7 @@ $(document).ready(function () {
     if (!isFavorite) {
       gifTastic.favGifsList.push(favObj);
       localStorage.setItem(favKeyInLocalStorage, JSON.stringify(gifTastic.favGifsList));
+      gifTastic.renderFavGifs(gifTastic.favGifsList);
     }
 
     console.log(gifTastic.favGifsList);

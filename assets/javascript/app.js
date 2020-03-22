@@ -149,7 +149,6 @@ $(document).ready(function () {
           if (gifTastic.favGifsList.length > 0) {
             gifTastic.favGifsList.forEach(function(obj) {
               if (animateImage === obj.animateImage) {
-                console.log(`it already fav!!!!`);
                 favoriteTxtEl.text(gifTastic.favedText)
               }
             });
@@ -192,11 +191,9 @@ $(document).ready(function () {
 
     getFavGifsData: function () {
       if (!localStorage.getItem(favKeyInLocalStorage)) {
-        console.log('NO favoriteGifs');
         this.favGifsList = [];
       } else {
         // Get fav gifs data from local storage
-        console.log('favoriteGifs exists!');
         this.favGifsList = JSON.parse(localStorage.getItem(favKeyInLocalStorage));
       }
     },
@@ -229,12 +226,8 @@ $(document).ready(function () {
 
         favGifsContainerEl.append(heading, favGifsEl);
         $('#gifs-container').prepend(favGifsContainerEl);
-      } else {
-        console.log('There is no favorite gif!!');
       }
     },
-
-
 
     initialize: function () {
       this.resetGifsViewState();
@@ -276,28 +269,21 @@ $(document).ready(function () {
   });
 
 
-
   $(document).on('click', '.favorite-btn', function () {
     const favObj = {};
     const gifItemID = '#' + $(this).attr('data-name');
-    console.log(gifItemID);
 
     favObj.title = $(`${gifItemID} .title`).text();
     favObj.rating = $(`${gifItemID} .rating`).text();
     favObj.stillImage = $(`${gifItemID} .gif-image`).attr('data-still');
     favObj.animateImage = $(`${gifItemID} .gif-image`).attr('data-animate');
-    console.log(favObj);
 
     let isFavorite = false;
-
     gifTastic.favGifsList.forEach(function(obj) {
       if (favObj.animateImage === obj.animateImage) {
-        console.log(`it already exists!!!!`);
         isFavorite = true;
       }
     });
-
-    console.log('isFav: ' + isFavorite);
 
     if (!isFavorite) {
       gifTastic.favGifsList.push(favObj);
@@ -305,10 +291,6 @@ $(document).ready(function () {
       gifTastic.renderFavGifs(gifTastic.favGifsList);
       $(this).text(gifTastic.favedText);
     }
-
-    console.log(gifTastic.favGifsList);
-
   });
-
 
 });

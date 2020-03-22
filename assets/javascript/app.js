@@ -1,6 +1,7 @@
 // http://api.giphy.com/v1/gifs/search?api_key=1sjuds6ZKI5gKnDVhsyFsT55ptYVnuUG&q=mickey%20mouse&limit=5
 
 $(document).ready(function () {
+  const favKeyInLocalStorage = 'favoriteGifs';
 
   const gifTastic = {
     characters: [
@@ -25,6 +26,8 @@ $(document).ready(function () {
     gifsViewState: null,
 
     defaultMessage: 'Please click any button to show gif images of a Disney character.',
+
+    favGifsList: null,
 
     resetGifsViewState: function () {
       this.gifsViewState = this.gifsViewStateFactory();
@@ -119,9 +122,9 @@ $(document).ready(function () {
 
         response.data.forEach(function (item, index) {
           const dataNum = index + 1 + gifTastic.gifsViewState.offset;
-          const dataName = `${char}-${dataNum}`;
-          const gifItemEl = $('<div class="gif-item">').attr('data-name', dataName);
-          const titleEl = $('<p class="title">').text(`${dataNum} "${item.title}"`);
+          const dataName = `${char.replace(' ', '-')}_${dataNum}`;
+          const gifItemEl = $('<div class="gif-item">').attr('id', dataName);
+          const titleEl = $('<p class="title">').text(`${dataNum} ${item.title}`);
           const ratingEl = $('<div class="rating">').text(item.rating);
           const stillImage = item.images.fixed_height_still.url;
           const imageContainerEl = $('<div class="image-container">');
@@ -170,12 +173,27 @@ $(document).ready(function () {
       }
     },
 
+    getFavGifsData: function () {
+      if (!localStorage.getItem(favKeyInLocalStorage)) {
+        console.log('NO favoriteGifs');
+        this.favGifsList = [];
+      } else {
+        // Get fav gifs data from local storage
+        console.log('favoriteGifs exists!');
+        this.favGifsList = JSON.parse(localStorage.getItem(favKeyInLocalStorage));
+      }
+    },
+
     initialize: function () {
       this.resetGifsViewState();
       this.renderButtons();
       this.renderMessage();
+      this.getFavGifsData();
     }
   };
+
+
+
 
   gifTastic.initialize();
 
@@ -203,5 +221,23 @@ $(document).ready(function () {
       gifTastic.renderButtons();
     }
   });
+
+  $(document).on('click', '.favorite-btn', function () {
+    const favObj = {};
+    const gifItemID = '#' + $(this).attr('data-name');
+    console.log(gifItemID);
+
+    favObj.title = $(`${gifItemID} .title`).text();
+    favObj.rating = $(`${gifItemID} .rating`).text();
+    favObj.stillImage = $(`${gifItemID} .gif-image`).attr('data-still');
+    favObj.animateImage = $(`${gifItemID} .gif-image`).attr('data-animate');
+    console.log(favObj);
+
+    gifTastic.favGifsList.push(favObj);
+    console.log(gifTastic.favGifsList);
+
+    localStorage.setItem(favKeyInLocalStorage, JSON.stringify(gifTastic.favGifsList));
+  });
+
 
 });

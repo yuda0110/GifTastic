@@ -272,6 +272,7 @@ header {
     font-size: 1.1rem;
     display: flex;
     align-items: center;
+    cursor: pointer;
 }
 
 .gif-item .favorite-btn span {

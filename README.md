@@ -6,6 +6,11 @@ Use the GIPHY API to make a dynamic web page that populates with gifs of your ch
 ![Giphy Api Screenshot](./assets/images/screenshot.jpg)
 
 
+### Links
+- [Link to the page](https://yuda0110.github.io/GifTastic/)
+- [Link to the code](https://github.com/yuda0110/GifTastic)
+
+
 ### Tech/framework used
 
 - HTML
